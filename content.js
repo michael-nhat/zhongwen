@@ -1,5 +1,10 @@
 /*
- Zhongwen - A Chinese-English Pop-Up Dictionary
+ Hanviet - Từ điển Hán Việt
+ Copyright (C) 2020 Liên Hoàng
+
+ ---
+
+ Originally based on Zhongwen - A Chinese-English Pop-Up Dictionary
  Copyright (C) 2010-2019 Christian Schiller
  https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
