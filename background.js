@@ -170,9 +170,9 @@ function activateExtension(tabId, showHelp) {
 
 async function loadDictData() {
     let wordDict = fetch(chrome.runtime.getURL(
-        "data/cedict_ts.u8")).then(r => r.text());
+        "data/cedict_augmented.u8")).then(r => r.text());
     let wordIndex = fetch(chrome.runtime.getURL(
-        "data/cedict.idx")).then(r => r.text());
+        "data/cedict_augmented.idx")).then(r => r.text());
     let grammarKeywords = fetch(chrome.runtime.getURL(
         "data/grammarKeywordsMin.json")).then(r => r.json());
 
@@ -282,7 +282,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
 
         case 'search': {
             let response = search(request.text);
-            response.originalText = request.originalText;
+            if (response) {
+                response.originalText = request.originalText;
+            }
             callback(response);
         }
             break;
