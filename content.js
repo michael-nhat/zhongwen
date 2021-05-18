@@ -246,21 +246,6 @@ function onKeyDown(keyDown) {
         //     }
         //     break;
 
-        case 84: // 't'
-            {
-                let sel = encodeURIComponent(
-                    window.getSelection().toString());
-
-                // https://tatoeba.org/eng/sentences/search?from=cmn&to=eng&query=%E8%BF%9B%E8%A1%8C
-                let tatoeba = 'https://tatoeba.org/eng/sentences/search?from=cmn&to=eng&query=' + sel;
-
-                chrome.runtime.sendMessage({
-                    type: 'open',
-                    url: tatoeba
-                });
-            }
-            break;
-
         case 88: // 'x'
             altView = 0;
             popY -= 20;
@@ -278,12 +263,12 @@ function onKeyDown(keyDown) {
                 let sel = encodeURIComponent(
                     window.getSelection().toString());
 
-                // https://www.moedict.tw/~%E4%B8%AD%E6%96%87
-                let moedict = 'https://www.moedict.tw/~' + sel;
+                // https://www.zdic.net/hans/%E4%B8%AD%E6%96%87
+                let zdic = 'https://www.zdic.net/hans/' + sel;
 
                 chrome.runtime.sendMessage({
                     type: 'open',
-                    url: moedict
+                    url: zdic
                 });
             }
             break;
@@ -293,12 +278,12 @@ function onKeyDown(keyDown) {
                 let sel = encodeURIComponent(
                     window.getSelection().toString());
 
-                // https://forvo.com/search/%E4%B8%AD%E6%96%87/zh/
-                var forvo = 'https://forvo.com/search/' + sel + '/zh/';
+                // https://www.moedict.tw/~%E4%B8%AD%E6%96%87
+                let moedict = 'https://www.moedict.tw/~' + sel;
 
                 chrome.runtime.sendMessage({
                     type: 'open',
-                    url: forvo
+                    url: moedict
                 });
             }
             break;
@@ -308,73 +293,12 @@ function onKeyDown(keyDown) {
                 let sel = encodeURIComponent(
                     window.getSelection().toString());
 
-                // https://dict.cn/%E7%BF%BB%E8%AF%91
-                let dictcn = 'https://dict.cn/' + sel;
+                // https://hvdic.thivien.net/whv/%E7%BF%BB%E8%AF%91
+                let hvdic = 'https://hvdic.thivien.net/whv/' + sel;
 
                 chrome.runtime.sendMessage({
                     type: 'open',
-                    url: dictcn
-                });
-            }
-            break;
-
-        case 52: // '4'
-            if (keyDown.altKey) {
-                let sel = encodeURIComponent(
-                    window.getSelection().toString());
-
-                // https://www.iciba.com/%E4%B8%AD%E9%A4%90
-                let iciba = 'https://www.iciba.com/' + sel;
-
-                chrome.runtime.sendMessage({
-                    type: 'open',
-                    url: iciba
-                });
-            }
-            break;
-
-        case 53: // '5'
-            if (keyDown.altKey) {
-                let sel = encodeURIComponent(
-                    window.getSelection().toString());
-
-                // https://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=%E6%B0%B4
-                let mdbg = 'https://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=' + sel;
-
-                chrome.runtime.sendMessage({
-                    type: 'open',
-                    url: mdbg
-                });
-            }
-            break;
-
-        case 54: // '6'
-            if (keyDown.altKey) {
-                let sel = encodeURIComponent(
-                    window.getSelection().toString());
-
-                // http://jukuu.com/show-%E8%AF%8D%E5%85%B8-0.html
-                // https returns 403 errors
-                let jukuu = 'http://jukuu.com/show-' + sel + '-0.html';
-
-                chrome.runtime.sendMessage({
-                    type: 'open',
-                    url: jukuu
-                });
-            }
-            break;
-
-        case 55: // '7'
-            if (keyDown.altKey) {
-                let sel = encodeURIComponent(
-                    window.getSelection().toString());
-
-                // https://www.moedict.tw/~%E4%B8%AD%E6%96%87
-                let moedict = 'https://www.moedict.tw/~' + sel;
-
-                chrome.runtime.sendMessage({
-                    type: 'open',
-                    url: moedict
+                    url: hvdic
                 });
             }
             break;
@@ -1086,13 +1010,9 @@ let miniHelp = `
     Tra từ này trên các từ điển khác:
     <table style="margin: 10px;" cellspacing=5 cellpadding=5>
     <tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>
-    <tr><td><b>Alt + 1 :</b></td><td>&nbsp;LINE Dict</td></tr>
-    <tr><td><b>Alt + 2 :</b></td><td>&nbsp;Forvo</td></tr>
-    <tr><td><b>Alt + 3 :</b></td><td>&nbsp;Dict.cn</td></tr>
-    <tr><td><b>Alt + 4&nbsp;:</b></td><td>&nbsp;iCIBA</td></tr>
-    <tr><td><b>Alt + 5&nbsp;:</b></td><td>&nbsp;MDBG</td></tr>
-    <tr><td><b>Alt + 6&nbsp;:</b></td><td>&nbsp;JuKuu</td></tr>
-    <tr><td><b>Alt + 7&nbsp;:</b></td><td>&nbsp;MoE Dict</td></tr>
+    <tr><td><b>Alt + 1 :</b></td><td>&nbsp;zdic.net Handian</td></tr>
+    <tr><td><b>Alt + 2 :</b></td><td>&nbsp;Taiwan MoE Dict</td></tr>
+    <tr><td><b>Alt + 3 :</b></td><td>&nbsp;Thi Viện Hvdic</td></tr>
     </table>`;
 
 // event listener
