@@ -1,5 +1,10 @@
 /*
- Zhongwen - A Chinese-English Pop-Up Dictionary
+ Hanviet - Từ điển Hán Việt
+ Copyright (C) 2020 Liên Hoàng
+
+ ---
+
+ Originally based on Zhongwen - A Chinese-English Pop-Up Dictionary
  Copyright (C) 2010-2019 Christian Schiller
  https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
@@ -866,9 +871,23 @@ function makeHtml(result, showToneColors) {
 
     if (result === null) return '';
 
+    // HACK: Cache last displayed word, so that Vietnamese fields don't get
+    // displayed multiple times.
+    let prevWord;
     for (let i = 0; i < result.data.length; ++i) {
-        entry = result.data[i][0].match(/^([^\s]+?)\s+([^\s]+?)\s+\[(.*?)\]?\s*\/(.+)\//);
+        entry = result.data[i][0].match(/^([^\s]+?)\s+([^\s]+?)\s+\[(.*?)\]?\s*\/(.+\/)/);
         if (!entry) continue;
+
+        // Parse definition fields, which may or may not include Han Viet data.
+        // TODO: Make this part of the regex match, when I'm less sleepy.
+        const defFields = entry[4].split('\t');
+        const enDef = defFields[0].slice(0, -1).replace(/\//g, '; ');
+        let hanViet, viDef;
+        if (defFields.length > 1 && entry[1] !== prevWord) {
+            hanViet = defFields[1];
+            viDef = defFields[2].substring(1).replace(/\//g, '<br>');
+            prevWord = entry[1];
+        }
 
         // Hanzi
 
@@ -904,6 +923,12 @@ function makeHtml(result, showToneColors) {
         let p = pinyinAndZhuyin(entry[3], showToneColors, pinyinClass);
         html += p[0];
 
+        // Han Viet
+        const hanvietClass = 'w-hanviet' + (config.fontSize === 'small' ? '-small' : '');
+        if (hanViet) {
+            html += `&nbsp;<span class="${pinyinClass} ${hanvietClass}">${hanViet}</span>`;
+        }
+
         // Zhuyin
 
         if (config.zhuyin === 'yes') {
@@ -916,15 +941,14 @@ function makeHtml(result, showToneColors) {
         if (config.fontSize === 'small') {
             defClass += '-small';
         }
-        let translation = entry[4].replace(/\//g, '; ');
-        html += '<br><span class="' + defClass + '">' + translation + '</span><br>';
+        html += `<br><span class="${defClass}">${viDef || ''}<b>ENG </b>${enDef}</span><br>`;
 
         // Grammar
         if (config.grammar !== 'no' && result.grammar && result.grammar.index === i) {
             html += '<br><span class="grammar">Press "g" for grammar and usage notes.</span><br><br>';
         }
 
-        texts[i] = [entry[2], entry[1], p[1], translation, entry[3]];
+        texts[i] = [entry[2], entry[1], p[1], enDef, entry[3]];
     }
     if (result.more) {
         html += '&hellip;<br/>';

@@ -7,13 +7,13 @@
   "homepage_url": "https://github.com/cschiller/zhongwen",
   "description": "Great tool for learning Chinese. Includes links to Chinese Grammar Wiki. Supports adding words to Skritter.",
   "icons": {
-    "16": "images/zhongwen16.png",
-    "48": "images/zhongwen48.png",
-    "128": "images/zhongwen.png"
+    "16": "images/hanviet16.png",
+    "48": "images/hanviet48.png",
+    "128": "images/hanviet128.png"
   },
   "browser_action": {
-    "default_icon": "images/zhongwen48.png",
-    "default_title": "Zhongwen Chinese Popup Dictionary"
+    "default_icon": "images/hanviet48.png",
+    "default_title": "Từ Điển Hán Việt Popup"
   },
   "background": {
     "page": "background.html"
@@ -44,7 +44,7 @@
   ],
   "commands": {
     "_execute_browser_action": {
-      "description": "Enable/Disable Zhongwen"
+      "description": "Enable/Disable Hanviet"
     }
   },
   "web_accessible_resources": [
