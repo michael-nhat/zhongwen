@@ -104,12 +104,11 @@ function activateExtension(tabId, showHelp) {
     //     {
     //         title: 'Open word list',
     //         onclick: function () {
-    //             let url = chrome.runtime.getURL('/wordlist.html');
+    //             let url = '/wordlist.html';
     //             let tabID = tabIDs['wordlist'];
     //             if (tabID) {
     //                 chrome.tabs.get(tabID, function (tab) {
-    //                     if (tab && tab.url && (tab.url.substr(-13) === 'wordlist.html')) {
-    //                         chrome.tabs.reload(tabID);
+    //                     if (tab && tab.url && (tab.url.endsWith('wordlist.html'))) {
     //                         chrome.tabs.update(tabID, {
     //                             active: true
     //                         });
@@ -118,7 +117,6 @@ function activateExtension(tabId, showHelp) {
     //                             url: url
     //                         }, function (tab) {
     //                             tabIDs['wordlist'] = tab.id;
-    //                             chrome.tabs.reload(tab.id);
     //                         });
     //                     }
     //                 });
@@ -127,7 +125,6 @@ function activateExtension(tabId, showHelp) {
     //                     { url: url },
     //                     function (tab) {
     //                         tabIDs['wordlist'] = tab.id;
-    //                         chrome.tabs.reload(tab.id);
     //                     }
     //                 );
     //             }
@@ -138,12 +135,11 @@ function activateExtension(tabId, showHelp) {
         {
             title: 'Hiển thị Trợ giúp bằng tab mới',
             onclick: function () {
-                let url = chrome.runtime.getURL('/help.html');
+                let url = '/help.html';
                 let tabID = tabIDs['help'];
                 if (tabID) {
                     chrome.tabs.get(tabID, function (tab) {
-                        if (tab && (tab.url.substr(-9) === 'help.html')) {
-                            chrome.tabs.reload(tabID);
+                        if (tab && (tab.url.endsWith('help.html'))) {
                             chrome.tabs.update(tabID, {
                                 active: true
                             });
@@ -152,7 +148,6 @@ function activateExtension(tabId, showHelp) {
                                 url: url
                             }, function (tab) {
                                 tabIDs['help'] = tab.id;
-                                chrome.tabs.reload(tab.id);
                             });
                         }
                     });
@@ -161,7 +156,6 @@ function activateExtension(tabId, showHelp) {
                         { url: url },
                         function (tab) {
                             tabIDs['help'] = tab.id;
-                            chrome.tabs.reload(tab.id);
                         }
                     );
                 }
@@ -269,12 +263,24 @@ function search(text) {
 
 chrome.browserAction.onClicked.addListener(activateExtensionToggle);
 
-chrome.tabs.onActivated.addListener(activeInfo => enableTab(activeInfo.tabId));
+chrome.tabs.onActivated.addListener(activeInfo => {
+    if (activeInfo.tabId === tabIDs['wordlist']) {
+        chrome.tabs.reload(activeInfo.tabId);
+    } else if (activeInfo.tabId !== tabIDs['help']) {
+        enableTab(activeInfo.tabId);
+    }
+});
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
-    if (changeInfo.status === 'complete') {
+    if (changeInfo.status === 'complete' && tabId !== tabIDs['help'] && tabId !== tabIDs['wordlist']) {
         enableTab(tabId);
     }
 });
+
+function createTab(url, tabType) {
+    chrome.tabs.create({ url }, tab => {
+        tabIDs[tabType] = tab.id;
+    });
+}
 
 chrome.runtime.onMessage.addListener(function (request, sender, callback) {
 
@@ -291,37 +297,21 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
         }
             break;
 
-        case 'open':
+        case 'open': {
             tabID = tabIDs[request.tabType];
             if (tabID) {
-                chrome.tabs.get(tabID, function (tab) {
-                    if (chrome.runtime.lastError) {
-                        tab = undefined;
-                    }
-                    if (tab && tab.url && (tab.url.substr(-13) === 'wordlist.html')) {
-                        // open existing word list
-                        chrome.tabs.update(tabID, {
-                            active: true
-                        });
+                chrome.tabs.get(tabID, () => {
+                    if (!chrome.runtime.lastError) {
+                        // activate existing tab
+                        chrome.tabs.update(tabID, { active: true, url: request.url });
                     } else {
-                        chrome.tabs.create({
-                            url: request.url
-                        }, function (tab) {
-                            tabIDs[request.tabType] = tab.id;
-                        });
+                        createTab(request.url, request.tabType);
                     }
                 });
             } else {
-                chrome.tabs.create({
-                    url: request.url
-                }, function (tab) {
-                    tabIDs[request.tabType] = tab.id;
-                    if (request.tabType === 'wordlist') {
-                        // make sure the table is sized correctly
-                        chrome.tabs.reload(tab.id);
-                    }
-                });
+                createTab(request.url, request.tabType);
             }
+        }
             break;
 
         case 'speak': 
@@ -370,17 +360,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
             localStorage['wordlist'] = JSON.stringify(wordlist);
 
             tabID = tabIDs['wordlist'];
-            if (tabID) {
-                chrome.tabs.get(tabID, function (tab) {
-                    if (tab) {
-                        chrome.tabs.reload(tabID);
-                    }
-                });
-            }
         }
             break;
-
-        default:
-        // ignore
     }
 });
