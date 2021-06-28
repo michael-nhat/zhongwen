@@ -97,17 +97,9 @@ function disableTab() {
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('keydown', onKeyDown);
 
-    let zhongwenCSS = document.getElementById('zhongwen-css');
-    if (zhongwenCSS) {
-        zhongwenCSS.parentNode.removeChild(zhongwenCSS);
-    }
-    let zhongwenToneColors = document.getElementById('zhongwen-toneColors');
-    if (zhongwenToneColors) {
-        zhongwenToneColors.parentNode.removeChild(zhongwenToneColors);
-    }
-    let zhongwenWindow = document.getElementById('zhongwen-window');
-    if (zhongwenWindow) {
-        zhongwenWindow.parentNode.removeChild(zhongwenWindow);
+    let popup = document.getElementById('zhongwen-window');
+    if (popup) {
+        popup.parentNode.removeChild(popup);
     }
 
     clearHighlight();
@@ -183,6 +175,7 @@ function onKeyDown(keyDown) {
 
                 chrome.runtime.sendMessage({
                     type: 'open',
+                    tabType: 'grammar',
                     url: allset
                 });
             }
@@ -253,6 +246,22 @@ function onKeyDown(keyDown) {
         //     }
         //     break;
 
+        // case 84: // 't'
+        //     {
+        //         let sel = encodeURIComponent(
+        //             window.getSelection().toString());
+
+        //         // https://tatoeba.org/eng/sentences/search?from=cmn&to=eng&query=%E8%BF%9B%E8%A1%8C
+        //         let tatoeba = 'https://tatoeba.org/eng/sentences/search?from=cmn&to=eng&query=' + sel;
+
+        //         chrome.runtime.sendMessage({
+        //             type: 'open',
+        //             tabType: 'tatoeba',
+        //             url: tatoeba
+        //         });
+        //     }
+        //     break;
+
         case 73: // 'i'
             altView = 0;
             popY -= 20;
@@ -275,6 +284,7 @@ function onKeyDown(keyDown) {
 
                 chrome.runtime.sendMessage({
                     type: 'open',
+                    tabType: 'zdic',
                     url: zdic
                 });
             }
@@ -290,6 +300,7 @@ function onKeyDown(keyDown) {
 
                 chrome.runtime.sendMessage({
                     type: 'open',
+                    tabType: 'moedict',
                     url: moedict
                 });
             }
@@ -305,6 +316,7 @@ function onKeyDown(keyDown) {
 
                 chrome.runtime.sendMessage({
                     type: 'open',
+                    tabType: 'hvdic',
                     url: hvdic
                 });
             }
