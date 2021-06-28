@@ -217,7 +217,7 @@ function onKeyDown(keyDown) {
         //         'entries': entries
         //     });
 
-        //     showPopup('Added to word list.<p>Press Alt+W to open word list.', null, -1, -1);
+        //     showPopup('Đã thêm vào danh sách từ vựng.<p>Nhấn Alt+W để mở danh sách từ vựng.', null, -1, -1);
         // }
         //     break;
 
