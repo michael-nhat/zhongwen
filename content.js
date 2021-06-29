@@ -322,6 +322,22 @@ function onKeyDown(keyDown) {
             }
             break;
 
+        case 52: // '4' 
+            if (keyDown.altKey) {
+                let sel = encodeURIComponent(
+                    window.getSelection().toString());
+
+                // https://baike.baidu.com/item/%E7%BF%BB%E8%AF%91
+                let baidu = 'https://baike.baidu.com/item/' + sel;
+
+                chrome.runtime.sendMessage({
+                    type: 'open',
+                    tabType: 'baidu',
+                    url: baidu
+                });
+            }
+            break;
+
         default:
             return;
     }
@@ -1037,6 +1053,7 @@ let miniHelp = `
     <tr><td><b>Alt + 1 :</b></td><td>&nbsp;zdic.net Handian</td></tr>
     <tr><td><b>Alt + 2 :</b></td><td>&nbsp;Taiwan MoE Dict</td></tr>
     <tr><td><b>Alt + 3 :</b></td><td>&nbsp;Thi Viện Hvdic</td></tr>
+    <tr><td><b>Alt + 4 :</b></td><td>&nbsp;Baidu (tra tên riêng, ngôn ngữ mạng)</td></tr>
     </table>`;
 
 // event listener
