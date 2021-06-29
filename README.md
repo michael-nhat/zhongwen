@@ -14,14 +14,15 @@ Link để tải về:
 
 ## Tính năng chính
 - Hỗ trợ tra cứu cả phồn thể và giản thể.
+- Phát âm cụm từ bằng tiếng phổ thông (Đại Lục, Đài Loan) hoặc tiếng Quảng (Hồng Kông).
 - Hiển thị bính âm, phiên âm, định nghĩa bằng tiếng Việt và nghĩa tiếng Anh.
 - Nguồn từ điển:
-    - Nguồn Hán-Việt: Tổng hợp từ nhiều nguồn uy tín. Extension developer có biên tập
-      lại để hiển thị các nghĩa của Hán tự đa âm tiết rõ ràng hơn.
+    - Nguồn Hán-Việt: Tổng hợp từ nhiều nguồn uy tín. Extension developer có xử lý và biên tập
+      dữ liệu để hiển thị các nghĩa của Hán tự đa âm tiết rõ ràng hơn.
       - Hán Việt tự điển, Thiều Chửu, Hà Nội, 1942.
-      - Từ điển Hán Việt, Trần Văn Chánh, NXB Trẻ, TP Hồ Chí Minh, 1999.
-      - Cơ sở dữ liệu Unihan do tổ chức Unicode ban hành.
-      - Tự Điển Chữ Nôm (http://nomfoundation.org).
+      - Hán Việt Từ Điển Trích Dẫn Edition Paris © DTK 2006-2020 (được sự cho phép của chú Đặng Thế Kiệt).
+      - [Đang xử lý]  Cơ sở dữ liệu Unihan của Unicode.
+      - [Đang xử lý]  Tự Điển Chữ Nôm (http://nomfoundation.org).
     - Nguồn Hán-Anh: [CEDICT](https://cc-cedict.org/wiki) Chinese English dictionary.
     - Ngoài ra tiện ích cũng hộ trợ tra chéo trên nhiều từ điển trực tuyến uy tín:
         - zdic.net Hán điển (https://www.zdic.net/).
