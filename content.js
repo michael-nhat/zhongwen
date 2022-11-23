@@ -226,13 +226,13 @@ function onKeyDown(keyDown) {
 
         //         // https://www.skritter.com/vocab/api/add?from=Chrome&lang=zh&word=浏览&trad=瀏 覽&rdng=liú lǎn&defn=to skim over; to browse
 
-        //         let skritter = 'https://legacy.skritter.com';
+        //         let skritter = 'https://skritter.com';
         //         if (config.skritterTLD === 'cn') {
-        //             skritter = 'https://legacy.skritter.cn';
+        //             skritter = 'https://skritter.cn';
         //         }
 
         //         skritter +=
-        //             '/vocab/api/add?from=Zhongwen&siteref=Zhongwen&lang=zh&word=' +
+        //             '/vocab/api/add?from=zhongwen&ref=zhongwen&lang=zh&word=' +
         //             encodeURIComponent(savedSearchResults[0][0]) +
         //             '&trad=' + encodeURIComponent(savedSearchResults[0][1]) +
         //             '&rdng=' + encodeURIComponent(savedSearchResults[0][4]) +
@@ -258,6 +258,21 @@ function onKeyDown(keyDown) {
         //             type: 'open',
         //             tabType: 'tatoeba',
         //             url: tatoeba
+        //         });
+        //     }
+        //     break;
+
+        // case 86: // 'v'
+        //     if (config.vocab !== 'no' && savedSearchResults.vocab) {
+        //         let sel = encodeURIComponent(window.getSelection().toString());
+
+        //         // https://resources.allsetlearning.com/chinese/vocabulary/%E4%B8%AA
+        //         let allset = 'https://resources.allsetlearning.com/chinese/vocabulary/' + sel;
+
+        //         chrome.runtime.sendMessage({
+        //             type: 'open',
+        //             tabType: 'vocab',
+        //             url: allset
         //         });
         //     }
         //     break;
@@ -326,7 +341,6 @@ function onKeyDown(keyDown) {
             if (keyDown.altKey) {
                 let sel = encodeURIComponent(
                     window.getSelection().toString());
-
                 // https://baike.baidu.com/item/%E7%BF%BB%E8%AF%91
                 let baidu = 'https://baike.baidu.com/item/' + sel;
 
@@ -905,9 +919,22 @@ function makeHtml(result, showToneColors) {
         }
         html += `<br><span class="${defClass}">${viDef || ''}<b>ENG </b>${enDef}</span><br>`;
 
+        let addFinalBr = false;
+
         // Grammar
         if (config.grammar !== 'no' && result.grammar && result.grammar.index === i) {
             html += '<br><span class="grammar">Nhấn "g" để xem thêm chú thích ngữ pháp.</span><br><br>';
+            addFinalBr = true;
+        }
+
+        // Vocab
+        if (config.vocab !== 'no' && result.vocab && result.vocab.index === i) {
+            html += '<br><span class="vocab">Nhấn "v" để xem thêm chú thích từ vựng.</span><br>';
+            addFinalBr = true;
+        }
+
+        if (addFinalBr) {
+            html += '<br>';
         }
 
         texts[i] = [entry[2], entry[1], p[1], enDef, entry[3]];
@@ -918,6 +945,7 @@ function makeHtml(result, showToneColors) {
 
     savedSearchResults = texts;
     savedSearchResults.grammar = result.grammar;
+    savedSearchResults.vocab = result.vocab;
 
     return html;
 }
