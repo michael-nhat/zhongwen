@@ -138,9 +138,9 @@ function onKeyDown(keyDown) {
             triggerSearch();
             break;
 
-        // case 67: // 'c'
-        //     copyToClipboard(getTextForClipboard());
-        //     break;
+        case 67: // 'c'
+            copyToClipboard(getTextForClipboard());
+            break;
 
         case 66: // 'b'
         {
@@ -262,20 +262,20 @@ function onKeyDown(keyDown) {
         //     }
         //     break;
 
-        // case 86: // 'v'
-        //     if (config.vocab !== 'no' && savedSearchResults.vocab) {
-        //         let sel = encodeURIComponent(window.getSelection().toString());
+        case 86: // 'v'
+            if (config.vocab !== 'no' && savedSearchResults.vocab) {
+                let sel = encodeURIComponent(window.getSelection().toString());
 
-        //         // https://resources.allsetlearning.com/chinese/vocabulary/%E4%B8%AA
-        //         let allset = 'https://resources.allsetlearning.com/chinese/vocabulary/' + sel;
+                // https://resources.allsetlearning.com/chinese/vocabulary/%E4%B8%AA
+                let allset = 'https://resources.allsetlearning.com/chinese/vocabulary/' + sel;
 
-        //         chrome.runtime.sendMessage({
-        //             type: 'open',
-        //             tabType: 'vocab',
-        //             url: allset
-        //         });
-        //     }
-        //     break;
+                chrome.runtime.sendMessage({
+                    type: 'open',
+                    tabType: 'vocab',
+                    url: allset
+                });
+            }
+            break;
 
         case 73: // 'i'
             altView = 0;
