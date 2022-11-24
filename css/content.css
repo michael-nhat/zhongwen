@@ -92,6 +92,9 @@
   opacity: 0.6;
 }
 
+#zhongwen-window .vocab {
+  font-weight: bold;
+}
 
 /* Yellow Background */
 #zhongwen-window.background-yellow,
@@ -106,6 +109,10 @@
 }
 
 #zhongwen-window.background-yellow .grammar {
+  color: #00008b;
+}
+
+#zhongwen-window.background-yellow .vocab {
   color: #00008b;
 }
 
@@ -131,6 +138,9 @@
   color: #00008b;
 }
 
+#zhongwen-window.background-lightblue .vocab {
+  color: #00008b;
+}
 
 /* Blue Background */
 #zhongwen-window.background-blue,
@@ -153,6 +163,9 @@
   color: #add8e6;
 }
 
+#zhongwen-window.background-blue .vocab {
+  color: #add8e6;
+}
 
 /* Black Background */
 #zhongwen-window.background-black,
@@ -175,6 +188,9 @@
   color: #add8e6;
 }
 
+#zhongwen-window.background-black .vocab {
+  color: #add8e6;
+}
 
 /* Standard Tone Colors */
 #zhongwen-window.tonecolor-standard .tone1 {
