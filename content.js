@@ -835,7 +835,7 @@ function copyToClipboard(data) {
         'data': data
     });
 
-    showPopup('Copied to clipboard', null, -1, -1);
+    showPopup('Đã sao chép vào clipboard', null, -1, -1);
 }
 
 function makeHtml(result, showToneColors) {
