@@ -52,5 +52,10 @@
     "css/*",
     "js/*",
     "images/*"
-  ]
+  ],
+  "externally_connectable": {
+    "ids": [
+      "*"
+    ]
+  }
 }

@@ -289,6 +289,26 @@ function createTab(url, tabType) {
     });
 }
 
+const resutl = chrome.runtime.onConnectExternal.addListener(port => {
+    console.log("connect at zhongwen");
+  });
+
+chrome.runtime.onConnectExternal.addListener(function(port) {
+port.onMessage.addListener(function(msg) {
+    switch (msg.messageData){
+        case "activate":  
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+                activateExtension(tabs[0].id, true);
+            });
+            break;
+        case "deactivate":  
+            deactivateExtension();
+            break;
+        default:
+    }
+});
+});
+ 
 chrome.runtime.onMessage.addListener(function (request, sender, callback) {
 
     let tabID;
